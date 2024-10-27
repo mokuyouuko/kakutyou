@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>新しいタブ</title>
+  <style>
+    /* 変更箇所 */
+    button {
+      background-color: #0078d4;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition-duration: 0.4s;
+    }
+    button:hover {
+      background-color: white;
+      color: black;
+      border: 2px solid #0078d4;
+    }
+    /* 既存のスタイル */
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #282c34;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .status-bar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      background-color: #333;
+      padding: 5px 10px;
+      box-sizing: border-box;
+      z-index: 999;
+    }
+    .network-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #333;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      box-sizing: border-box;
+      z-index: 999;
+    }
+    .online {
+      color: green;
+    }
+    .offline {
+      color: red;
+    }
+    .file-input {
+      display: none;
+    }
+  </style>
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <div class="status-bar">
+    <div class="network-info">
+      <div id="network-status" class="online">⚫️ オンライン</div>
+    </div>
+    <div id="current-time"></div>
+    <div id="battery-status">バッテリー: 100%</div>
+    <div id="fps">FPS: 0</div>
+    <div id="coordinates">座標: (0, 0)</div>
+  </div>
+  <div class="taskbar">
+    <button id="add-file-btn">ファイルを追加</button>
+    <button id="permissions-btn">権限の設定</button>
+    <input type="file" id="file-input" class="file-input">
+  </div>
+</body>
+</html>

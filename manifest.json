@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "無限デスクトップ拡張機能",
+  "version": "1.0",
+  "description": "無限に広がるデスクトップを提供するChrome拡張機能",
+  "action": {
+    "default_title": "無限デスクトップを開く"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "storage"]
+}
