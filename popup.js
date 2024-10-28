@@ -299,13 +299,37 @@ karaokeWindow.id = 'karaoke-window';
 karaokeWindow.style.position = 'absolute';
 karaokeWindow.style.width = '400px';
 karaokeWindow.style.height = '200px';
-karaokeWindow.style.backgroundColor = '#fff';
+karaokeWindow.style.backgroundColor = '#333';
+karaokeWindow.style.color = 'white';
 karaokeWindow.style.border = '1px solid #ccc';
 karaokeWindow.style.borderRadius = '5px';
 karaokeWindow.style.padding = '20px';
 karaokeWindow.style.zIndex = '1000';
 karaokeWindow.style.display = 'none';
+karaokeWindow.style.cursor = 'move';
 document.body.appendChild(karaokeWindow);
+
+let isDraggingKaraokeWindow = false;
+let karaokeWindowOffsetX = 0, karaokeWindowOffsetY = 0;
+
+karaokeWindow.addEventListener('mousedown', (e) => {
+  if (e.target !== karaokeWindowCloseBtn) {
+    isDraggingKaraokeWindow = true;
+    karaokeWindowOffsetX = e.clientX - karaokeWindow.getBoundingClientRect().left;
+    karaokeWindowOffsetY = e.clientY - karaokeWindow.getBoundingClientRect().top;
+  }
+});
+
+document.addEventListener('mousemove', (e) => {
+  if (isDraggingKaraokeWindow) {
+    karaokeWindow.style.left = `${e.clientX - karaokeWindowOffsetX}px`;
+    karaokeWindow.style.top = `${e.clientY - karaokeWindowOffsetY}px`;
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  isDraggingKaraokeWindow = false;
+});
 
 // カラオケモードウィンドウのコンテンツ
 const karaokeWindowTitle = document.createElement('h3');
@@ -317,38 +341,32 @@ karaokeWindowMessage.textContent = '×ボタンを押すとカラオケモード
 karaokeWindow.appendChild(karaokeWindowMessage);
 
 const karaokeWindowCloseBtn = document.createElement('button');
-karaokeWindowCloseBtn.textContent = '×';
+karaokeWindowCloseBtn.textContent = '✖️';
 karaokeWindowCloseBtn.style.position = 'absolute';
 karaokeWindowCloseBtn.style.top = '10px';
 karaokeWindowCloseBtn.style.right = '10px';
+karaokeWindowCloseBtn.style.border = 'none';
+karaokeWindowCloseBtn.style.backgroundColor = 'transparent';
+karaokeWindowCloseBtn.style.color = 'white';
+karaokeWindowCloseBtn.style.cursor = 'pointer';
 karaokeWindow.appendChild(karaokeWindowCloseBtn);
 
-// カラオケモード機能の実装
-let isKaraokeMode = false;
-
-karaokeBtn.addEventListener('click', () => {
-  isKaraokeMode = true;
-  karaokeWindow.style.display = 'block';
-  // 音が反射するように処理を追加
-  reflectSound();
-});
-
 karaokeWindowCloseBtn.addEventListener('click', () => {
-  isKaraokeMode = false;
   karaokeWindow.style.display = 'none';
-  // 音の反射を停止
-  stopReflectSound();
 });
 
-function reflectSound() {
+// カラオケモードを開始するボタン
+const startKaraokeBtn = document.createElement('button');
+startKaraokeBtn.id = 'start-karaoke-btn';
+startKaraokeBtn.textContent = 'カラオケモードを開始';
+document.querySelector('.taskbar').appendChild(startKaraokeBtn);
+
+startKaraokeBtn.addEventListener('click', () => {
+  karaokeWindow.style.display = 'block';
+});
+
   // 音が反射するように処理を実装
   console.log('音が反射しています');
-}
-
-function stopReflectSound() {
-  // 音の反射を停止する処理を実装
-  console.log('音の反射を停止しました');
-}
 // 既存のコードに追加
 
 // 音楽再生ボタンの作成
@@ -382,3 +400,61 @@ musicPlayBtn.addEventListener('click', () => {
     musicPlayBtn.textContent = '音楽再生';
   }
 });
+
+const mysteryBtn = document.createElement('button');
+mysteryBtn.textContent = '???';
+document.querySelector('.taskbar').appendChild(mysteryBtn);
+
+const inputWindow = document.createElement('div');
+inputWindow.id = 'input-window';
+inputWindow.style.position = 'absolute';
+inputWindow.style.width = '400px';
+inputWindow.style.height = '200px';
+inputWindow.style.backgroundColor = '#fff';
+inputWindow.style.border = '1px solid #ccc';
+inputWindow.style.borderRadius = '5px';
+inputWindow.style.padding = '20px';
+inputWindow.style.zIndex = '1000';
+inputWindow.style.display = 'none';
+document.body.appendChild(inputWindow);
+
+const inputField = document.createElement('input');
+inputField.type = 'text';
+inputField.placeholder = '入力してください';
+inputWindow.appendChild(inputField);
+
+const inputWindowSubmitBtn = document.createElement('button');
+inputWindowSubmitBtn.textContent = '送信';
+inputWindow.appendChild(inputWindowSubmitBtn);
+
+mysteryBtn.addEventListener('click', () => {
+  inputWindow.style.display = 'block';
+});
+
+inputWindowSubmitBtn.addEventListener('click', () => {
+  const inputValue = inputField.value;
+  if (inputValue === '↑↓↑↑↑↓BY') {
+    displayGameWindow();
+  } else {
+    inputWindow.style.display = 'none';
+  }
+});
+
+function displayGameWindow() {
+  // ゲームウィンドウの定義と表示処理を追加する
+  const gameWindow = document.createElement('div');
+  gameWindow.id = 'game-window';
+  gameWindow.style.position = 'absolute';
+  gameWindow.style.width = '600px';
+  gameWindow.style.height = '400px';
+  gameWindow.style.backgroundColor = '#333';
+  gameWindow.style.color = 'white';
+  gameWindow.style.borderRadius = '5px';
+  gameWindow.style.padding = '20px';
+  gameWindow.style.zIndex = '1000';
+  gameWindow.style.display = 'block';
+  document.body.appendChild(gameWindow);
+
+  // ゲームの表示処理を追加する
+  // ...
+}
